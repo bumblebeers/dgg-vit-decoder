@@ -23,13 +23,23 @@
 
 ```bash
 pip install git+https://github.com/bumblebeers/dgg-vit-decoder.git
-# Or for local editable development:
-git clone https://github.com/bumblebeers/dgg-vit-decoder.git && cd dgg-vit-decoder && pip install -e .[test]
+```
+
+## Quickstart
+
+```python
+import torch
+from dgg_vit_decoder import ImageDecoder, psnr
+
+decoder = ImageDecoder(d_in=1152, d_model=768, depth=4, heads=12).eval()
+h_v = torch.randn(1, 256, 1152)
+rgb_pred = decoder(h_v)  # -> (1, 3, 768, 768) in [0, 1]
+score_db = psnr(rgb_pred, torch.rand_like(rgb_pred))
 ```
 
 ## Related Resources
 
 - **Main Research & Benchmark Repository**: [bumblebeers/dgg2-latent-code-graphs](https://github.com/bumblebeers/dgg2-latent-code-graphs)
 - **Pretrained Adapters & ImageDecoder Weights**: [bumblebeer/dgg2-latent-code-graphs-adapters](https://huggingface.co/bumblebeer/dgg2-latent-code-graphs-adapters)
-- **AST Code-Graph Benchmark Packs**: [bumblebeer/dgg2-code-graph-benchmarks](https://huggingface.co/datasets/bumblebeer/dgg2-code-graph-benchmarks)
+- **AST Code-Graph Benchmark Packs & Raw Predictions**: [bumblebeer/dgg2-code-graph-benchmarks](https://huggingface.co/datasets/bumblebeer/dgg2-code-graph-benchmarks)
 - **License**: Apache-2.0
